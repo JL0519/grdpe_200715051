@@ -9,736 +9,1022 @@ import java.util.Properties;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 
 public class graficosProyecto  extends JFrame{
 		
-		public graficosProyecto() {
+
+	public graficosProyecto(){
 		
+		setTitle("IPC1 - PROYECTO 2");
+		setSize(1300,700);
+		setResizable(false);
+		setLocationRelativeTo(null);
+		laminaPort milamina = new laminaPort();
+		add(milamina);
+	}
+	
+	
+	private class laminaPort extends JPanel{
+		
+		
+		
+		private  Image usuariobiblio,Lusac,biblio;
+		
+		public void paintComponent(Graphics g) {
 			
-			setTitle("IPC1 - PROYECTO 1");
-			setSize(1300,700);
-			setResizable(false);
-			setLocationRelativeTo(null);
-			laminaPort milamina = new laminaPort();
-			add(milamina);
+			
+			super.paintComponent(g);
+			
+			try {
+				
+				usuariobiblio = ImageIO.read(new File("src/imag/iconobiblio.png"));
+				
+			}catch(IOException e) {
+				
+				JOptionPane.showMessageDialog(this, "La imagen no se encuentra");
+			}
+			
+			try {
+				
+				Lusac = ImageIO.read(new File("src/imag/Lusac.png"));
+				
+			}catch(IOException e) {
+				
+				JOptionPane.showMessageDialog(this, "La imagen no se encuentra");
+			}
+			
+			try {
+				
+				biblio = ImageIO.read(new File("src/imag/Biblioteca-Virtual.jpg"));
+				
+			}catch(IOException e) {
+				
+				JOptionPane.showMessageDialog(this, "La imagen no se encuentra");
+			}
+			
+			g.drawImage(usuariobiblio, 70,25, null);
+			
+			g.drawImage(Lusac, 50,300, null);
+			
+			g.drawImage(biblio, 695, 305, null);
+			
+			g.drawRect(35, 15, 1200, 160);
+			
+			g.drawRect( 690, 300, 490, 260);
 		}
 		
-		
-		private class laminaPort extends JPanel{
+		public laminaPort(){
 			
+			setLayout(null);
 			
+			JButton botonlogin = new JButton("Login");
+			JButton botonabout = new JButton("About");
 			
-			private  Image usuariobiblio,Lusac,biblio;
+			botonlogin.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					marcologin login = new marcologin();
+					login.setVisible(true);
+					
+				}
+
+			});
 			
-			public void paintComponent(Graphics g) {
+			botonabout.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+//					mrcabout lamina = new mrcabout();
+//					lamina.setVisible(true);
+				}
 				
+			});
+			
+			botonlogin.setBounds(1000, 47, 80, 40);
+			botonabout.setBounds(500, 550, 95, 40);
+			
+			
+			
+			add(botonlogin);
+			add(botonabout);
+			
+		}
+
+	}
+}
+
+//LOGIN
+//-----------------------------------------------------------------------------------------------------------
+class marcologin extends JFrame{
+	
+	registroAlumno registro = new registroAlumno();
+	
+	public marcologin(){
+		
+		setTitle("Login");
+		setSize(550,350);
+		setResizable(false);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		
+		laminalogin lamina = new laminalogin();
+		add(lamina);
+	}
+	
+	public void salir() {
+		
+		this.setVisible(false);
+	}
+	
+	private class laminalogin extends JPanel{
+		
+		JTextField texto1;
+		JPasswordField contra;
+
+		
+		public void paintComponent(Graphics g) {
 				
 				super.paintComponent(g);
 				
 				try {
 					
-					usuariobiblio = ImageIO.read(new File("src/imag/iconobiblio.png"));
+					usuario = ImageIO.read(new File("src/imag/usuarioP.png"));
+					}
+				catch(IOException e){
 					
-				}catch(IOException e) {
-					
-					JOptionPane.showMessageDialog(this, "La imagen no se encuentra");
-				}
+					JOptionPane.showMessageDialog(marcologin.this, "La imagen no se encuentra");
+					}
+				g.drawImage(usuario,400,50,null);
+			}
+		
+		
+		public void ingreso() {
+			
+			String admin = "admin";
+			String pass = "123";
+			
+			String password = new String(contra.getPassword());
 				
-				try {
-					
-					Lusac = ImageIO.read(new File("src/imag/Lusac.png"));
-					
-				}catch(IOException e) {
-					
-					JOptionPane.showMessageDialog(this, "La imagen no se encuentra");
-				}
-				
-				try {
-					
-					biblio = ImageIO.read(new File("src/imag/Biblioteca-Virtual.jpg"));
-					
-				}catch(IOException e) {
-					
-					JOptionPane.showMessageDialog(this, "La imagen no se encuentra");
-				}
-				
-				g.drawImage(usuariobiblio, 70,25, null);
-				
-				g.drawImage(Lusac, 50,300, null);
-				
-				g.drawImage(biblio, 695, 305, null);
-				
-				g.drawRect(35, 15, 1200, 160);
-				
-				g.drawRect( 690, 300, 490, 260);
+			if(texto1.getText().equals(admin) && password.equals(pass)) {
+			
+			MarcoAdmin base= new MarcoAdmin();
+			base.setVisible(true);
+			marcologin.this.setVisible(false);
+			
 			}
 			
-			public laminaPort(){
+//			else if() {
+//				
+//				
+//			}
+			
+			else {
 				
-				setLayout(null);
-				
-				JButton botonlogin = new JButton("Login");
-				JButton botonabout = new JButton("About");
-				
-				botonlogin.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-//						marcologin login = new marcologin();
-//						login.setVisible(true);
-						
-					}
-
-				});
-				
-				botonabout.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-//						mrcabout lamina = new mrcabout();
-//						lamina.setVisible(true);
-					}
-					
-				});
-				
-				botonlogin.setBounds(460, 70, 95, 40);
-				botonabout.setBounds(500, 550, 95, 40);
-				
-				
-				
-				add(botonlogin);
-				add(botonabout);
-				
-		
-				
+				JOptionPane.showMessageDialog(rootPane,"El usuario no existe. Por favor ponerse en contacto con "
+										+"el administrador para solicitar un registro.","ERROR",0);
 			}
+		}
+		
+//-----------------------------------------------------------------------------------------------------------------			
+	public laminalogin() {
+				
+		setLayout(null);
+				
+				
+		JLabel rotulo1 = new JLabel("Nombre:");
+		JLabel rotulo2 = new JLabel("Contraseña:");
+		
+		texto1 = new JTextField();
+		contra = new JPasswordField();
+		
+		rotulo1.setBounds(20, 20, 75, 20);
+		rotulo2.setBounds(20, 80, 75, 20);
+		
+		texto1.setBounds(140, 50, 175, 20);
+		contra.setBounds(140, 110, 175, 20);
+		
+		JButton ingresar = new JButton("Ingresar");
+		JButton cancelar = new JButton("Cancelar");
+		JButton limpiar = new JButton("Limpiar");
+		
+		
+		ingresar.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				ingreso();
+			}
+	
+		});
+				
+				
+		limpiar.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+						
+						texto1.setText("");
+						contra.setText("");
+					
+				}
+				
+				
+			});	
+		
+		cancelar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				salir();
+			}
+		});
+				
+				ingresar.setBounds(80, 200, 105, 30);
+				limpiar.setBounds(200, 200, 105, 30);
+				cancelar.setBounds(320, 200, 105, 30);
+				
+				add(rotulo1);
+				add(rotulo2);
+				add(texto1);
+				add(contra);
+				add(ingresar);
+				add(cancelar);
+				add(limpiar);
+			
+			}
+			
+			private Image usuario;
 		}
 
 }
 
-//LOGIN
-	//-----------------------------------------------------------------------------------------------------------
-	class marcologin extends JFrame{
+//ADMINISTRADOR
+//------------------------------------------------------------------------------------------------------
+
+class MarcoAdmin extends JFrame{
+	
+	public MarcoAdmin() {
 		
-		public marcologin(){
+		
+		setTitle("Administrador");
+		setSize(1000,500);
+		setResizable(false);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		laminaBase milamina = new laminaBase();
+		add(milamina);
+		
+		
+	}
+	
+	private class laminaBase extends JPanel{
+		
+		private Image Java,adminImagen;
+		
+		public void paintComponent(Graphics c) {
 			
-			setTitle("Login");
-			setSize(550,350);
-			setResizable(false);
-			setLocationRelativeTo(null);
-			setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+			super.paintComponent(c);
 			
-			laminalogin lamina = new laminalogin();
-			add(lamina);
+			Graphics2D d = (Graphics2D)c;
 			
-			setVisible(true );
+			Rectangle2D rect = new Rectangle2D.Double(650,280,250,150);
+			
+			Rectangle2D rect2 = new Rectangle2D.Double(350,280,250,150);
+			
+			Rectangle2D rect3 = new Rectangle2D.Double(50,280,250,150);
+			
+			try {
+				
+				Java = ImageIO.read(new File("src/imag/Logo Java.png"));
+				
+				adminImagen= ImageIO.read(new File("src/imag/admin logo.png"));
+				
+				}
+			catch(IOException e){
+				
+				JOptionPane.showMessageDialog(MarcoAdmin.this, "La imagen no se encuentra");
+				}
+			
+			d.drawImage(adminImagen, 600, 90, null);
+			
+			d.drawImage(Java,100,130,null);
+			
+			d.draw(rect);
+			
+			d.draw(rect2);
+			
+			d.draw(rect3);
 		}
 		
-		private class laminalogin extends JPanel{
+		
+		
+		public laminaBase() {
 			
-			JTextField texto1;
-			JPasswordField contra;
+			setLayout(null);
 			
-			String barra = File.separator;
+			JLabel logo= new JLabel("Logo");
+			JLabel adminUsu = new JLabel("Alumnos:");
+			JLabel adminBiblio= new JLabel("Notas:");
+			JLabel adminCatedratico = new JLabel("Catedratico:");
 			
-			private String ubicacion = System.getProperty("user.dir")+barra+"Registros"+barra;
-			
-			public void paintComponent(Graphics g) {
-					
-					super.paintComponent(g);
-					
-					try {
-						
-						usuario = ImageIO.read(new File("src/imag/usuarioP.png"));
-						}
-					catch(IOException e){
-						
-						JOptionPane.showMessageDialog(marcologin.this, "La imagen no se encuentra");
-						}
-					g.drawImage(usuario,400,50,null);
-				}
+			JButton botonlog = new JButton("Logout");
+			JButton botonAlumno = new JButton("Alumnos");
+			JButton botonNota = new JButton("Notas");
+			JButton botonCatedra = new JButton("Catedraticos");
 			
 			
-			public void ingreso() {
-				
-				String admin = "admin";
-				String pass = "password";
-				
-				String password = new String(contra.getPassword());
-				
-				File url = new File(ubicacion+texto1.getText()+".registro");
-				
-				if(texto1.getText().equals(admin) && password.equals(pass)) {
-				
-				MarcoAdmin base= new MarcoAdmin();
-				base.setVisible(true);
-				this.setVisible(false);
-				
-				}
-				
-				else if(url.exists()) {
-					
-					
-					
-					try {
-						
-						FileInputStream fis1 = new FileInputStream(url);
-						
-						Properties mostrar = new Properties();
-						
-						mostrar.load(fis1);
-						
-						
-						
-						String texto1 = mostrar.getProperty("id");
-						
-						String cui = texto1;
-						
-						String pass2 = mostrar.getProperty("contraseña");
-						
-						//System.out.println(cui);					
-						//System.out.println(pass2);
-						
-						if(texto1.equals(cui) && password.equals(pass2) ){
-							
-//							Usuario usu = new Usuario();
-//							usu.setVisible(true);
-//							marcologin.this.setVisible(false);
-						}
-						else {
-							
-							JOptionPane.showMessageDialog(rootPane, "Contraseña Incorrecta");
-						}
-						
-						
-						
-					}catch(Exception e) {
-						
-						JOptionPane.showMessageDialog(rootPane, "No se encuentra el Usuario");
-					}
-				}
-				
-				else {
-					
-					JOptionPane.showMessageDialog(marcologin.this,"El usuario no existe. Por favor ponerse en contacto con "
-											+"el administrador para solicitar un registro.","ERROR",0);
-				}
-			}
-			
-	//-----------------------------------------------------------------------------------------------------------------			
-		public laminalogin() {
-					
-					setLayout(null);
-					
-					
-			JLabel rotulo1 = new JLabel("Nombre:");
-			JLabel rotulo2 = new JLabel("Contraseña:");
-			
-			texto1 = new JTextField();
-			contra = new JPasswordField();
-			
-			rotulo1.setBounds(20, 20, 75, 20);
-			rotulo2.setBounds(20, 80, 75, 20);
-			
-			texto1.setBounds(140, 50, 175, 20);
-			contra.setBounds(140, 110, 175, 20);
-			
-			JButton ingresar = new JButton("Ingresar");
-			JButton cancelar = new JButton("Cancelar");
-			
-			
-			ingresar.addActionListener(new ActionListener() {
+			botonlog.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					ingreso();
+						
+					MarcoAdmin.this.setVisible(false);
+					
 				}
-		
+						
 			});
-					
-					
-			cancelar.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						
-						if(e.getSource()==cancelar) {
-							
-							texto1.setText("");
-							contra.setText("");
-						}
-						
-					}
-					
-					
-				});	
-					
-					ingresar.setBounds(80, 200, 105, 30);
-					cancelar.setBounds(250, 200, 105, 30);
-					
-					add(rotulo1);
-					add(rotulo2);
-					add(texto1);
-					add(contra);
-					add(ingresar);
-					add(cancelar);
+			
+			botonAlumno.addActionListener(new ActionListener() {
 				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+					ventanaUsuario ventana = new ventanaUsuario();
+					ventana.setVisible(true);
+					
+					
 				}
-				
-				private Image usuario;
-			}
-
+			});
+			
+			
+			logo.setBounds(150, 100, 50, 20);
+			botonlog.setBounds(830, 100, 95, 30);
+			botonCatedra.setBounds(400, 350, 150, 30);
+			botonNota.setBounds(700, 350, 150, 30);
+			botonAlumno.setBounds(100, 350, 150, 30);
+			adminUsu.setBounds(70, 300, 75, 25);
+			adminBiblio.setBounds(690, 300, 75, 25);
+			adminCatedratico.setBounds(360, 300, 80, 20);
+			
+			
+			add(logo);
+			add(botonlog);
+			add(adminUsu);
+			add(adminBiblio);
+			add(botonCatedra);
+			add(adminCatedratico);
+			add(botonAlumno);
+			add(botonNota);
+			
+		}
 	}
 
-	//ADMINISTRADOR
-	//------------------------------------------------------------------------------------------------------
+}
 
-	class MarcoAdmin extends JFrame{
+class ventanaUsuario extends JFrame{
+	
+	private JButton agregar, mostrar, eliminar, modificar;
+	registroAlumno alumno1 = new registroAlumno();
+	
+	
+	public ventanaUsuario() {
+		// TODO Auto-generated constructor stub
 		
-		public MarcoAdmin() {
-			
-			
-			setTitle("Administrador");
-			setSize(1200,650);
-			setResizable(false);
-			laminaBase milamina = new laminaBase();
-			add(milamina);
-			setLocationRelativeTo(null);
-			setVisible(true);
-			setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-			
-		}
+		setTitle("Ventana de Alumno");
+		setSize(300,220);
+		setResizable(false);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
-		private class laminaBase extends JPanel{
-			
-			private Image Java,adminImagen;
-			
-			public void paintComponent(Graphics c) {
-				
-				super.paintComponent(c);
-				
-				Graphics2D d = (Graphics2D)c;
-				
-				Rectangle2D rect = new Rectangle2D.Double(700,280,450,300);
-				
-				Rectangle2D rect2 = new Rectangle2D.Double(50,280,450,300);
-				
-				try {
-					
-					Java = ImageIO.read(new File("src/Logo Java.png"));
-					}
-				catch(IOException e){
-					
-					JOptionPane.showMessageDialog(MarcoAdmin.this, "La imagen no se encuentra");
-					}
-				
-				try {
-					
-					adminImagen= ImageIO.read(new File("src/imag/admin logo.png"));
-					}
-				catch(IOException e){
-					
-					JOptionPane.showMessageDialog(MarcoAdmin.this, "La imagen no se encuentra");
-					}
-				
-				d.drawImage(adminImagen, 800, 90, null);
-				
-				d.drawImage(Java,100,130,null);
-				
-				d.draw(rect);
-				
-				d.draw(rect2);
-			}
-			
-			
-			
-			public laminaBase() {
-				
-				setLayout(null);
-				
-				JLabel logo= new JLabel("Logo");
-				JLabel adminUsu = new JLabel("Usuarios");
-				JLabel adminBiblio= new JLabel("Bibliografias");
-				
-				
-				
-				JButton botonlog = new JButton("Logout");
-				JButton usuCrear= new JButton("Crear");
-				JButton biblioCrear= new JButton("Crear");
-				JButton usuEliminar= new JButton("Eliminar");
-				JButton biblioEliminar = new JButton("Eliminar");
-				JButton usuModificar= new JButton("Modificar");
-				JButton biblioModificar= new JButton("Modificar");
-				JButton usuMostrar= new JButton("Mostrar");
-				JButton biblioMostrar= new JButton("Mostrar");
-				
-				
-				
-				botonlog.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						
-						
-						MarcoAdmin.this.setVisible(false);
-						
-					}
-					
-					
-					
-				});
-				
-				usuCrear.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						registroUsu ver = new registroUsu();
-						ver.setVisible(true);
-					}
-
-				});
-				
-				usuMostrar.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						JOptionPane.showMessageDialog(rootPane, "Ingrese el ID/CUI");
-						
-//						mostrarUsu mostrar = new mostrarUsu();
-//						
-//						mostrar.setVisible(true);
-					}
-
-				});
-				
-				usuModificar.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						
-//						JOptionPane.showMessageDialog(rootPane, "Ingrese el ID/CUI para modificar");
-//						modificarUsu modificar = new modificarUsu();
-//						modificar.setVisible(true);
-					}
-					
-				});
-				
-				usuEliminar.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-//						eliminarUsu eliminar = new eliminarUsu();
-//						eliminar.setVisible(true);
-					}
-				});
-				
-				biblioCrear.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-//						cargaIndividual carga = new cargaIndividual();
-//						carga.setVisible(true);
-					}
-					
-				});
-				
-				biblioMostrar.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						JOptionPane.showMessageDialog(rootPane, "Ingrese el nombre del TITULO para mostrar el archivo guardado");
-
-						
-//						bibliomostrar mostrar = new bibliomostrar();
-//						mostrar.setVisible(true);
-					}
-					
-				});
-				
-				biblioEliminar.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-//						borrarbiblio borrar = new borrarbiblio();
-//						borrar.setVisible(true);
-					}
-					
-				});
-				
-				biblioModificar.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						JOptionPane.showMessageDialog(rootPane, "Ingrese primero el titulo deseado para modificar");
-//						modificarbiblio modi = new modificarbiblio();
-//						modi.setVisible(true);
-					}
-					
-				});
-				
-				logo.setBounds(150, 100, 50, 20);
-				botonlog.setBounds(1000, 100, 95, 30);
-				adminUsu.setBounds(70, 300, 75, 25);
-				adminBiblio.setBounds(720, 300, 75, 25);
-				usuCrear.setBounds(80, 350, 120, 40);
-				usuEliminar.setBounds(80,500,120,40);
-				usuModificar.setBounds(300,350,120,40);
-				usuMostrar.setBounds(300,500,120,40);
-				biblioCrear.setBounds(730, 350, 120, 40);
-				biblioEliminar.setBounds(730,500,120,40);
-				biblioModificar.setBounds(1000,350,120,40);
-				biblioMostrar.setBounds(1000,500,120,40);
-				
-				add(logo);
-				add(botonlog);
-				add(adminUsu);
-				add(adminBiblio);
-				add(usuCrear);
-				add(usuEliminar);
-				add(usuModificar);
-				add(usuMostrar);
-				add(biblioCrear);
-				add(biblioEliminar);
-				add(biblioModificar);
-				add(biblioMostrar);
-			}
-		}
-
+		laminaventana lamin =new laminaventana();
+		add(lamin);
+		
 	}
-
-
-	//REGISTRO
-	//----------------------------------------------------------------------------------------------------------
-
-
-	class registroUsu extends JFrame{
+	
+	private class laminaventana extends JPanel{
 		
 		
-		public registroUsu(){
+		public laminaventana() {
+			// TODO Auto-generated constructor stub
+		
+			setLayout(null);
 			
+			agregar = new JButton("Agregar");
+			mostrar = new JButton("Visualizar");
+			modificar = new JButton("Modificar");
+			eliminar = new JButton("Eliminar");
 			
-			setTitle("Registro de Usuarios");
-			setBounds(300,80,350,355);
-			setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-			setResizable(false);
+			agregar.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+					
+					alumno1.setVisible(true);
+				}
+			});
 			
-			laminaregistro milamina = new laminaregistro();
-			add(milamina);
+			mostrar.addActionListener( new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					visualizarUsuario visual = new visualizarUsuario();
+					
+					visual.setVisible(true);
+					
+					System.out.println("El tamaño de la lista es: "+alumno1.lista.getTamaño());
+				}
+			});
 			
-			setVisible(true);
+			agregar.setBounds(100, 30, 100, 30);
+			mostrar.setBounds(100, 70, 100, 30);
+			modificar.setBounds(100, 110, 100, 30);
+			eliminar.setBounds(100, 150, 100, 30);
+			
+			add(agregar);
+			add(mostrar);
+			add(modificar);
+			add(eliminar);
+			
 		}
+	}
+}
+
+
+//REGISTRO ALUMNO
+//----------------------------------------------------------------------------------------------------------
+
+class registroAlumno extends JFrame{
+	
+	private JTextField txtid,txtnombre,txtcorreo,txtdireccion,txtrcreditos, txtcarnet;
+	private JLabel contraRandom, carnet, id, nombre, correo,direccion, creditos, contraseña;
+
+	int valorAuto;
+	private String ultimos,id2,carnet2,nombre2,direccion2,correo2,creditos2,contraseña2;
+	
+	static String contenido;
+	
+	static listaUsu lista = new listaUsu();//SE INSTANCIA AFUERA PARA QUE NO INICIE DESDE CER0 LA LISTA(PARA QUE SE PUEDAN AGREGAR ELEMENTOS NUEVOS)
+	
+	public registroAlumno(){
+		
+		
+		setTitle("Registro de Usuarios");
+		setSize(430,350);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setResizable(false);
+		
+		
+		laminaregistro milamina = new laminaregistro();
+		add(milamina);
+		
+		botonUsuario miboton = new botonUsuario();
+		
+		add(miboton, BorderLayout.SOUTH);
+	}
 
 	private class laminaregistro extends JPanel{
-		
-
-		String barra = File.separator;
-		
-		private String ubicacion = System.getProperty("user.dir")+barra+"Registros"+barra;
-		
-		private JTextField txtid,txtnombre,txtapellido,txtuser,txtrol,txtcontraseña;
-		
-		private void crear() {
 			
-			
-			
-			String archivo = txtid.getText()+".registro";
-			
-			File crearubicacion = new File(ubicacion);
-			File creararchivo= new File(ubicacion+archivo);
-			
-			if(txtid.getText().equals("")) {
-				
-				JOptionPane.showMessageDialog(rootPane, "No hay ID/CUI");
-			}else {
-				
-				try {
-					
-					if(creararchivo.exists()) {
-						
-						JOptionPane.showMessageDialog(rootPane, "El registro ya Existe");
-						
-					}
-					
-					else {
-						
-						
-						crearubicacion.mkdirs();
-						
-						
-						Formatter crea = new Formatter(ubicacion+archivo);
-						
-						crea.format("%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s",
-								"id= "+txtid.getText(),"nombre= "+txtnombre.getText(),"apellido= "+txtapellido.getText()
-								,"user= "+txtuser.getText(),"rol= "+txtrol.getText(),"contraseña= "+txtcontraseña.getText());
-						
-						 
-						crea.close();
-						JOptionPane.showMessageDialog(rootPane, "Archivo Creado");
-						
-					}
-				
-				}catch(Exception e) {
-					
-					JOptionPane.showMessageDialog(rootPane, "No se pudo crear archivo");
-
-				}
-				
-			}
-			
-		}
-
-
 		
 		public laminaregistro(){
 			
-			setLayout(new colocar());
+			setLayout(null);
+			
+			carnet = new JLabel("Carné:");
+			id = new JLabel("ID/CUI:");
+			nombre = new JLabel("Nombre:");
+			correo = new JLabel("Correo:");
+			direccion = new JLabel("Direccion:");
+			creditos = new JLabel("Creditos:");
+			contraseña = new JLabel("Contraseña:");
+			contraRandom = new JLabel();
+			
+			txtcarnet = new JTextField();
+			txtid = new JTextField();
+			txtnombre = new JTextField();
+			txtcorreo = new JTextField();
+			txtdireccion = new JTextField();
+			txtrcreditos = new JTextField();
+			
+			carnet.setBounds(30,30,100,20);
+			txtcarnet.setBounds(180,30,150,20);
+			id.setBounds(30,60,100,20);
+			txtid.setBounds(180,60,150,20);
+			nombre.setBounds(30,90,100,20);
+			txtnombre.setBounds(180,90,150,20);
+			direccion.setBounds(30,120,100,20);
+			txtdireccion.setBounds(180,120,150,20);
+			correo.setBounds(30,150,100,20);
+			txtcorreo.setBounds(180,150,150,20);
+			creditos.setBounds(30,180,100,20);
+			txtrcreditos.setBounds(180,180,150,20);
+			contraseña.setBounds(30, 210, 100, 20);
+			contraRandom.setBounds(180, 210, 150, 20);
+			
+			add(id);
+			add(txtid);
+			add(carnet);
+			add(txtcarnet);
+			add(nombre);
+			add(txtnombre);
+			add(direccion);
+			add(txtdireccion);
+			add(correo);
+			add(txtcorreo);
+			add(creditos);
+			add(txtrcreditos);
+			add(contraseña);
+			add(contraRandom);
 			
 			
-			JLabel id = new JLabel("ID/CUI");
-			JLabel nombre = new JLabel("Nombre");
-			JLabel apellido = new JLabel("Apellido");
-			JLabel user = new JLabel("User");
-			JLabel rol= new JLabel("Rol");
-			JLabel contraseña = new JLabel("Contraseña");
+		}
+	
+	}
+
+private class botonUsuario extends JPanel{
+	
+	public botonUsuario() {
+		// TODO Auto-generated constructor stub
+		
+		setBackground(Color.orange);
+	
+		JButton registrar = new JButton("Registrar");
+		JButton crearContra = new JButton("contraseña");
+		JButton cancelar = new JButton("Limpiar");
+		JButton masiva = new JButton("Carga Masiva");
+		
+		registrar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				agregar();// LLAMAMOS METODO
 			
-			txtid = new JTextField(10);
-			txtnombre = new JTextField(10);
-			txtapellido = new JTextField(10);
-			txtuser = new JTextField(10);
-			txtrol = new JTextField(10);
-			txtcontraseña = new JTextField(10);
+			}
 			
-			JButton registrar = new JButton("Registrar");
 			
-			JButton cancelar = new JButton("Limpiar");
+		});
+		
+		masiva.addActionListener(new ActionListener() {
 			
-			registrar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+				cargaMasiva();
+			}
+		});
+		
+		cancelar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+					
+					txtid.setText("");
+					txtnombre.setText("");
+					txtcarnet.setText("");
+					txtcorreo.setText("");
+					txtdireccion.setText("");
+					txtrcreditos.setText("");
+					contraRandom.setText("");
+			}
+			
+			
+		});
+		
+		crearContra.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				contraseñaRandom();
+				
+			}
+		});
+		
+		add(crearContra);
+		add(registrar);
+		add(masiva);
+		add(cancelar);
+	}
+}
+
+
+	public void agregar() {
+	
+		id2 = txtid.getText();
+		nombre2 = txtnombre.getText();
+		correo2 = txtcorreo.getText();
+		direccion2 = txtdireccion.getText();
+		creditos2 = txtrcreditos.getText();
+		carnet2 = txtcarnet.getText();
+		contraseña2 = contraRandom.getText();
+		
+		lista.agregarFinal(carnet2, id2, nombre2, correo2, direccion2, creditos2, contraseña2);
+		
+		JOptionPane.showMessageDialog(rootPane, "Alumno registrado de manera exitosa!!!");
+	}
+	
+	public void visualizar() {
+		
+		lista.mostrarListaUsu();
+	}
+
+	public void cargaMasiva() {
+		
+		String separador = File.separator;
+		String url = "src"+separador+"archivo.ipc1_e";
+		
+		int c = 0;
+		int d =0;
+		int contador =0;
+		char letra2;
+		
+		try {
+			FileReader entrada = new FileReader(url);
+			FileReader entrada2 = new FileReader(url);
+			
+			while(c!=-1) {
+				
+				c = entrada.read();
+				
+				if(c ==-1) {
+				
+					break;
+				}	
+					
+				contador++;
+			}
+			
+			char [] texto = new char[contador];
+			
+			for(int i =0; i< contador;i++ ) {
+				
+				d = entrada2.read();
+				
+				letra2 = (char)d;
+				
+				texto[i]= letra2;
+			}
+			
+			contenido = new String(texto);
+			
+			//System.out.println(contenido);
+			
+			entrada.close();
+			
+		} catch (IOException e) {
+			
+			JOptionPane.showMessageDialog(rootPane, "No existe el archivo!!!!");
+		}
+		
+	}
+	
+	public void contraseñaRandom() {
+	
+		do{
+		
+			valorAuto = (int)(Math.random()*150);
+		
+		}while(valorAuto<50); 
+	
+		ultimos = Integer.toString(valorAuto);
+		
+		contraRandom.setText(txtcarnet.getText() + ultimos);
+	}
+}
+
+//VISUALIZAR USUARIO
+//-------------------------------------------------------------------------------------------------------------------------
+
+class visualizarUsuario extends JFrame {
+	
+	JButton visualUsu, visualCarga;
+	JTable tablaUsu, tablaCarga;
+	
+	String [] cabecera = {"Carnet","DPI/CUI", "Nombre", "Correo","Direccion", "Creditos", "Contraseña"};
+	
+	DefaultTableModel tabla1 = new DefaultTableModel(null, cabecera);
+	DefaultTableModel tabla2 = new DefaultTableModel(null, cabecera);
+	
+	registroAlumno alumno = new registroAlumno();
+	
+	cargaMasiva carga = new cargaMasiva();
+	
+	nodoUsuario temporal;
+	
+	
+	public visualizarUsuario() {
+		// TODO Auto-generated constructor stub
+	
+		setTitle("Visualzar Alumno");
+		setSize(600, 350);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		
+		laminaVisualizar lamina1 = new laminaVisualizar();
+		add(lamina1);
+		add(new JScrollPane(tablaUsu));
+		
+		laminaBotones lamina2 = new laminaBotones();
+		add(lamina2, BorderLayout.SOUTH);
+		
+		
+	}
+	
+	 class laminaVisualizar extends JPanel{
+		
+		public laminaVisualizar() {
+			// TODO Auto-generated constructor stub
+		
+			
+			tablaUsu = new JTable();
+			
+			tablaUsu.setModel(tabla1);
+			
+			add(tablaUsu);
+			
+		}
+	}
+	
+	class laminaBotones extends JPanel{
+		
+		public laminaBotones() {
+
+			visualUsu = new JButton("Individual");
+			visualCarga = new JButton("Carga Masiva");
+			
+			visualUsu.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+				
+					System.out.println(alumno.lista.getTamaño());
+					
+					temporal = alumno.lista.inicio;
+							
+					
+					for(int i = 0 ; i< alumno.lista.getTamaño(); i++) {
+						
+						System.out.println(temporal.getNombre());
+						
+						temporal = temporal.getSiguiente();
+						
+					}
+					
+					TablaIndividual();
+				}
+			});
+			
+			visualCarga.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+					tablaMasiva();
+				}
+			});
+		
+			add(visualUsu);
+			add(visualCarga);
+		}
+	}
+	
+	public void TablaIndividual() {
+		
+		temporal = alumno.lista.inicio;
+		
+		for(int i =0; i < alumno.lista.getTamaño(); i++) {
+			
+				String [] filas = {temporal.getCarnet(),temporal.getID(), temporal.getNombre(),temporal.getCorreo()
+						, temporal.getDireccion(), temporal.getCreditos(), temporal.getContraseña()};
+				
+				tabla1.addRow(filas);
+				
+				temporal = temporal.getSiguiente();
+		}
+		
+		tablaUsu.setModel(tabla1);
+	}
+	
+	public void tablaMasiva() {
+		
+		carga.cargaCadena(alumno.contenido);
+		
+		temporal = carga.lista.inicio;
+		
+		
+		for(int i =0; i < carga.lista.getTamaño(); i++) {
+			
+			String [] filas = {temporal.getCarnet(),temporal.getID(), temporal.getNombre(),temporal.getCorreo()
+					, temporal.getDireccion(), temporal.getCreditos(), temporal.getContraseña()};
+			
+			tabla2.addRow(filas);
+			
+			temporal = temporal.getSiguiente();
+		}
+	
+	tablaUsu.setModel(tabla2);
+
+	}
+}
+
+
+
+//USUARIO
+//--------------------------------------------------------------------------------------------------------------
+class Usuario extends JFrame{
+	
+	public Usuario() {
+		
+		setTitle("usuario");
+		setSize(1100,600);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		laminausuario lamina = new laminausuario();
+		add(lamina);
+	}
+	
+	private class laminausuario extends JPanel{
+		
+		String barra = File.separator;
+		
+		private String ubicacion = System.getProperty("user.dir")+barra+"Registros2"+barra;
+		
+		File contenedor = new File(ubicacion);
+		
+		File [] registros = contenedor.listFiles();
+		
+		private Image javaU, usuImagen;
+
+		
+		private String columna [] = {"tipo","Tilulo","Autor","Edicion","Clave","Descripcion","Copias","Tema","Disponible"};
+		
+		JTable tabla;
+		
+		DefaultTableModel tablamodel= new DefaultTableModel(null, columna);
+		
+		public void modelo2() {
+			
+			
+				
+			for(int i=0; i<registros.length; i++) {
+				
+				File url = new File(ubicacion+registros[i].getName());
+				
+				try {
+					FileInputStream fis = new FileInputStream(url);
+					
+					Properties mostrar = new Properties();
+					
+					mostrar.load(fis);
+					
+					String filas []= {registros[i].getName().replace(".biblio", ""),
+							
+							mostrar.getProperty("tipo"),
+							mostrar.getProperty("titulo"),
+							mostrar.getProperty("autor"),
+							mostrar.getProperty("edicion"),
+							mostrar.getProperty("clave"),
+							mostrar.getProperty("descripcion"),
+							mostrar.getProperty("copia"),
+							mostrar.getProperty("tema"),
+							mostrar.getProperty("dsponible")
+							
+					};
+					
+					tablamodel.addRow(filas);
+					
+				}catch(Exception e) {
+					
+					JOptionPane.showMessageDialog(rootPane, "Ese registro no Existe");
+					
+				}
+				
+				
+				
+			}
+			
+			tabla.setModel(tablamodel);
+			}
+		
+		
+			
+		
+		public void paintComponent(Graphics g){
+			
+			super.paintComponent(g);
+			
+			Graphics2D d = (Graphics2D)g;
+			
+			try {
+				
+				usuImagen = ImageIO.read(new File("src/imag/usuicon.jpg"));
+				}
+			catch(IOException e){
+				
+				JOptionPane.showMessageDialog(Usuario.this, "La imagen no se encuentra");
+				}
+			
+			try {
+				
+				javaU= ImageIO.read(new File("src/imag/javausu.png"));
+				
+			}catch(IOException e) {
+				
+				JOptionPane.showMessageDialog(Usuario.this, "La imagen no se encuentra");
+			}
+			
+			d.drawImage(usuImagen, 505, 75, null);
+			
+			d.drawImage(javaU,70,80,null);
+			
+		}
+		
+		public laminausuario(){
+			
+			setLayout(null);
+			
+			
+			
+			JLabel logo = new JLabel("Logo");
+			
+			JButton logout = new JButton("Logout");
+			JButton buscar = new JButton("Buscar");
+			JButton favorito = new JButton("Favoritos");
+			
+			JLabel eti = new JLabel("Titulo");
+			
+			JLabel text1 = new JLabel("Buscar Registros Disponibles");
+			
+			tabla= new JTable();
+			
+			tabla.setModel(tablamodel);
+			
+			logout.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					
-					crear();// LLAMAMOS METODO
-				
-				
-				}
-				
-				
+					
+					Usuario.this.setVisible(false);
+					
+			}
+
 			});
 			
-			cancelar.addActionListener(new ActionListener() {
+			buscar.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-						
-					if(e.getSource()==cancelar) {
-						
-						txtid.setText("");
-						txtnombre.setText("");
-						txtapellido.setText("");
-						txtuser.setText("");
-						txtrol.setText("");
-						txtcontraseña.setText("");
-					}
+					modelo2();
 				}
 				
 				
 			});
 			
+			tabla.setBounds(50, 300, 900, 200);
 			
+			logout.setBounds(950, 75, 95, 30);
+			logo.setBounds(80,40,75,30);
+			buscar.setBounds(100, 250, 95, 30);
+			favorito.setBounds(700,250,95,30);
+			text1.setBounds(270,250,250,30);
+			eti.setBounds(100, 225, 95, 30);
 			
-			add(id);
-			add(txtid);
-			add(nombre);
-			add(txtnombre);
-			add(apellido);
-			add(txtapellido);
-			add(user);
-			add(txtuser);
-			add(rol);
-			add(txtrol);
-			add(contraseña);
-			add(txtcontraseña);
+			add(logout);
+			add(logo);
+			add(buscar);
+			add(text1);
+			add(favorito);
+			add(eti);
 			
-			add(registrar);
-			add(cancelar);
+			add(tabla);	
 		}
 
 	}
-	private class colocar implements LayoutManager{
-		
-		private int x; 
-		private int y = 40;
-
-		@Override
-		public void addLayoutComponent(String arg0, Component arg1) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void layoutContainer(Container contenedor) {
-			// TODO Auto-generated method stub
-			
-			int d = contenedor.getWidth();
-			x= d/2;
-			
-			int contador = 0;
-			int n= contenedor.getComponentCount();
-			
-			for(int i = 0; i < n ; i++) {
-				
-				
-				contador++;
-				
-				Component c = contenedor.getComponent(i);
-				
-				c.setBounds(x-100, y, 100, 20);
-				x+= 100;
-				
-				if(contador%2==0) {
-					
-					x=d/2;
-					y+=40;
-				}
-				
-			}
-			
-		}
-
-		@Override
-		public Dimension minimumLayoutSize(Container arg0) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Dimension preferredLayoutSize(Container arg0) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public void removeLayoutComponent(Component arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		
-	    }
-	}
-
+	
+}	
 

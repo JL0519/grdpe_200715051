@@ -2,23 +2,67 @@ package Proyecto_2;
 
 public class cargaMasiva {
 	
-	String cadena, carnet, dpi, nombre, correo, direccion, creditos;
-	char caracter;
+static listaUsu lista = new listaUsu();
 	
 	public void cargaCadena(String cadena) {
 		
-		int contador = 0;
-		int cont1 = 0;
+		String carnet = "";
+		String dpi="";
+		String nombre=""; 
+		String correo="";
+		String direccion="";
+		String creditos="";
+		String contraseña;
 		
-		for(int i = 0; i< cadena.length();i++) {
+		int contador = 0;
+		int cont1 = 0;	
+		int contVueltas =0;
+		int contCaracter =0;
+		
+		if(!cadena.equals(""))
 			
-			cadena.charAt(i);
+		
+		for(int b =0; b< cadena.length();b++) {
 			
-			if(cadena.charAt(i)==';' && cont1 == 0) {//EJ: EL VALOR DE LA POSICION ES 4(5to. ELEMENTO)
+			if(cadena.charAt(b)==';') 
+				contador++;
+		}
+		
+	
+		
+	while(contVueltas < contador/6) {
+		
 			
-				char [] nom = new char [i];//EJ: EL VALOR DEL TAMAÑO DEL ARRAY ES 4
+		while(contCaracter < cadena.length() && cont1 < 6) {
+			
+			if(cadena.charAt(contCaracter)==';' && cont1 == 0) {//EJ: EL VALOR DE LA POSICION ES 4(5to. ELEMENTO)
 				
-				for(int j =0; j<i; j++) {
+				if(contCaracter>20) {
+					
+					int cont2 =0;
+					
+					for(int j =0; j<contCaracter; j++) {//EL VALOR DE i AL MOMENTO DE ENTRAR EN EL BUCLE
+						
+						if(cadena.charAt(j)==';') {
+						
+							cont2=j+1;
+						}	 
+					}
+					
+					char [] nom = new char [contCaracter-cont2];
+					
+					for(int k =0; k < contCaracter-cont2; k++) {
+						
+						nom[k] = cadena.charAt(k+cont2);
+								 
+					}
+					
+					carnet = new String(nom);
+				}else {
+			
+				char [] nom = new char [contCaracter];//EJ: EL VALOR DEL TAMAÑO DEL ARRAY ES 4
+				
+				for(int j =0; j<contCaracter ; j++) {
 					
 					nom[j] = cadena.charAt(j);
 						 
@@ -26,18 +70,18 @@ public class cargaMasiva {
 				
 				carnet = new String(nom);
 				
-				System.out.println("El carnet es: " +carnet);
-				
-				cont1++;
+				}
 			}
 			
+			//ESTOS METODOS QUE SE ENCUENTRAN EN LOS ELSE-IF SE USARAN CUANDO NO SEA LA PRIMERA SEPARACION
+			//(";" EN ESTE CASO) PARA PODER ALMACENAR LAS VARIABLES
 			//----------------------------------------------------------------------------------------------
-			else if(cadena.charAt(i)==';' && cont1 == 1) {
+			else if(cadena.charAt(contCaracter)==';' && cont1 == 1) {
 				
 				
 				int cont2 =0;
 				
-				for(int j =0; j<i; j++) {//EL VALOR DE i AL MOMENTO DE ENTRAR EN EL BUCLE
+				for(int j =0; j<contCaracter; j++) {//EL VALOR DE i AL MOMENTO DE ENTRAR EN EL BUCLE
 					
 					if(cadena.charAt(j)==';') {
 					
@@ -45,9 +89,9 @@ public class cargaMasiva {
 					}	 
 				}
 				
-				char [] num = new char [i-cont2];
+				char [] num = new char [contCaracter-cont2];
 				
-				for(int k =0; k < i-cont2; k++) {
+				for(int k =0; k < contCaracter-cont2; k++) {
 					
 					num[k] = cadena.charAt(k+cont2);
 							 
@@ -56,199 +100,125 @@ public class cargaMasiva {
 				dpi = new String(num);
 				
 
-				cont1++;
+//				cont1++;
 			}
 			
 			//------------------------------------------------------------------------------------------------
-			else if(cont1 == 2) {
+			else if(cadena.charAt(contCaracter)==';' && cont1 == 2) {
 				
-				short contpuntocoma =0;
-				short contpuntocoma2 =0;
-				short contInicio =0;
-				short contFinal =0;
 				
-				for(int j =0; j<cadena.length() && contpuntocoma<2 ; j++) {
+				int cont2 =0;
+				
+				for(int j =0; j<contCaracter; j++) {//EL VALOR DE i AL MOMENTO DE ENTRAR EN EL BUCLE
 					
 					if(cadena.charAt(j)==';') {
 					
-						contpuntocoma++;
-					}
-					
-					contInicio++;
+						cont2=j+1;
+					}	 
 				}
 				
-				
-				for(int k =0; k<cadena.length() && contpuntocoma2<3 ; k++) {
-					
-					if(cadena.charAt(k)==';') {
-					
-						contpuntocoma2++;
-						
-					}
-					
-					contFinal++;
-				}
-					
-				contFinal =(short)(contFinal-1);
+				char [] nom = new char [contCaracter-cont2];
 				
 				
-				char [] nom = new char [ contFinal-contInicio];
 				
 				for(int l = 0; l< nom.length; l++) {
 					
-					nom[l] = cadena.charAt(l+contInicio); 
+					nom[l] = cadena.charAt(l+cont2); 
 				}
 				
-				String nombre = new String(nom);
+				 nombre = new String(nom);
 				
-				System.out.println("El nombre es: "+nombre );
-				
-				cont1++;
+//				cont1++;
 			}
 			
 			//-------------------------------------------------------------------------------------------------
-			if(cont1 == 3) {
+			if(cadena.charAt(contCaracter)==';' && cont1 == 3) {
 				
-				short contpuntocoma =0;
-				short contpuntocoma2 =0;
-				short contInicio3 =0;
-				short contFinal3 =0;
+				int cont2 =0;
 				
-				for(int j =0; j<cadena.length() && contpuntocoma<3 ; j++) {
+				for(int j =0; j<contCaracter; j++) {//EL VALOR DE i AL MOMENTO DE ENTRAR EN EL BUCLE
 					
 					if(cadena.charAt(j)==';') {
 					
-						contpuntocoma++;
-					}
-					
-					contInicio3++;
-				}
-							
-				for(int k =0; k<cadena.length() && contpuntocoma2<4 ; k++) {
-					
-					if(cadena.charAt(k)==';') {
-					
-						contpuntocoma2++;
-						
-					}
-					
-					contFinal3++;
+						cont2=j+1;
+					}	 
 				}
 				
-				contFinal3 =(short)(contFinal3-1);
-							
-				char [] mail = new char [ contFinal3-contInicio3];
+				char [] mail = new char [contCaracter-cont2];
+				
+				
 				
 				for(int l = 0; l< mail.length; l++) {
 					
-					mail[l] = cadena.charAt(l+contInicio3); 
+					mail[l] = cadena.charAt(l+cont2); 
 				}
 				
 				correo = new String(mail);
 				
-				System.out.println("El correo es: "+ correo);
-				
-				cont1++;
 				
 			}
 			
 			//----------------------------------------------------------------------------------------------
-			if(cont1 == 4) {
+			if(cadena.charAt(contCaracter)==';' && cont1 == 4) {
 				
-				short contpuntocoma =0;
-				short contpuntocoma2 =0;
-				short contInicio4 =0;
-				short contFinal4 =0;
+				int cont2 =0;
 				
-				for(int j =0; j<cadena.length() && contpuntocoma<4 ; j++) {
+				for(int j =0; j<contCaracter; j++) {//EL VALOR DE i AL MOMENTO DE ENTRAR EN EL BUCLE
 					
 					if(cadena.charAt(j)==';') {
 					
-						contpuntocoma++;
-					}
-					
-					contInicio4++;
-				}
-							
-				for(int k =0; k<cadena.length() && contpuntocoma2<5 ; k++) {
-					
-					if(cadena.charAt(k)==';') {
-					
-						contpuntocoma2++;
-						
-					}
-					
-					contFinal4++;
+						cont2=j+1;
+					}	 
 				}
 				
-				contFinal4 =(short)(contFinal4-1);
-							
-				char [] dir = new char [ contFinal4-contInicio4];
-				
+				char [] dir = new char [contCaracter-cont2];
+					
 				for(int l = 0; l< dir.length; l++) {
 					
-					dir[l] = cadena.charAt(l+contInicio4); 
+					dir[l] = cadena.charAt(l+cont2); 
 				}
 				
 				direccion = new String(dir);
 				
-				System.out.println("La direccion es: "+ direccion);
 				
-				cont1++;
+//				cont1++;
 				
 			}
 			
 			//---------------------------------------------------------------------------------------------
-			if(cont1 == 5) {
+			if(cadena.charAt(contCaracter)==';' && cont1 == 5) {				
 				
-				short contpuntocoma =0;
-				short contpuntocoma2 =0;
-				short contInicio5 =0;
-				short contFinal5 =0;
+				int cont2 =0;
 				
-				for(int j =0; j<cadena.length() && contpuntocoma<5 ; j++) {
+				for(int j =0; j<contCaracter; j++) {//EL VALOR DE i AL MOMENTO DE ENTRAR EN EL BUCLE
 					
 					if(cadena.charAt(j)==';') {
 					
-						contpuntocoma++;
-					}
-					
-					contInicio5++;
-				}
-							
-				for(int k =0; k<cadena.length() && contpuntocoma2<6 ; k++) {
-					
-					if(cadena.charAt(k)==';') {
-					
-						contpuntocoma2++;
-						
-					}
-					
-					contFinal5++;
+						cont2=j+1;
+					}	 
 				}
 				
-				contFinal5 =(short)(contFinal5-1);
-							
-				char [] credit = new char [ contFinal5-contInicio5];
+				char [] credit = new char [contCaracter-cont2];
+				
+				
 				
 				for(int l = 0; l< credit.length; l++) {
 					
-					credit[l] = cadena.charAt(l+contInicio5); 
+					credit[l] = cadena.charAt(l+cont2); 
 				}
 				
 				creditos = new String(credit);
 				
-				System.out.println("Los creditos son: "+ creditos);
-				
-				cont1++;
-				
 			}
 			
-			contador++;
+			if(cadena.charAt(contCaracter)==';')
+				cont1++;
+			
+			contCaracter++;
 		}
 		
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		if(cont1>0) {
+		if(cont1>0 ) {
 			
 			int pass;
 			
@@ -256,24 +226,30 @@ public class cargaMasiva {
 				
 			pass = (int)(Math.random()*150);
 			
-			}while(pass>49);
+			}while(pass<=49);
 			
-			System.out.println("Hay " + cont1 + " ; en " + contador + " caracteres."
-					+ " y la contraseña es "+ carnet+pass);
-		
+			contraseña = carnet +Integer.toString(pass);
+			
+			System.out.println(carnet+" + "+dpi+" + "+nombre+" + "+ direccion+" + "+correo+" + " +contraseña+" + "+creditos);
+			
+			
+			lista.agregarFinal(carnet, dpi, nombre, correo, direccion, creditos, contraseña);
+			
 		}else {
 			
 			System.out.println("No hay ; en " + contador +" caracteres.");
-		}
 			
+		}
+		
+		contCaracter = contCaracter+1;
+		
+		cont1=0;
+		
+		contVueltas++;
 	}
 }
+}
 
-//System.out.println("inicio bucle 3: "+ contInicio3 + " y hay ; igual a: "+ contpuntocoma);
-//System.out.println("numero de elementos dentro de nombre: "+ (contFinal-contInicio));
-//System.out.println(contInicio + " valor de inicio");
-//System.out.println("El DPI es: " +dpi + " y tiene "+ dpi.length() + " caracteres.");
-//System.out.println(cont1+ " contador de variables");
 
 
 
