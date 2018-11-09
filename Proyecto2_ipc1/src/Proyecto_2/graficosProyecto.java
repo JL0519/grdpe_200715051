@@ -12,10 +12,11 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 
+
 public class graficosProyecto  extends JFrame{
 		
+	public graficosProyecto() {
 
-	public graficosProyecto(){
 		
 		setTitle("IPC1 - PROYECTO 2");
 		setSize(1300,700);
@@ -122,7 +123,15 @@ public class graficosProyecto  extends JFrame{
 //-----------------------------------------------------------------------------------------------------------
 class marcologin extends JFrame{
 	
+	JTextField texto1;
+	JPasswordField contra;
+	
 	registroAlumno registro = new registroAlumno();
+	cargaMasiva carga = new cargaMasiva();
+
+	nodoUsuario temporal, temporal2;
+	
+	Usuario usu1 = new Usuario();
 	
 	public marcologin(){
 		
@@ -141,10 +150,9 @@ class marcologin extends JFrame{
 		this.setVisible(false);
 	}
 	
+	
+//-----------------------------------------------------------------------------------------------------------------				
 	private class laminalogin extends JPanel{
-		
-		JTextField texto1;
-		JPasswordField contra;
 
 		
 		public void paintComponent(Graphics g) {
@@ -163,34 +171,7 @@ class marcologin extends JFrame{
 			}
 		
 		
-		public void ingreso() {
-			
-			String admin = "admin";
-			String pass = "123";
-			
-			String password = new String(contra.getPassword());
-				
-			if(texto1.getText().equals(admin) && password.equals(pass)) {
-			
-			MarcoAdmin base= new MarcoAdmin();
-			base.setVisible(true);
-			marcologin.this.setVisible(false);
-			
-			}
-			
-//			else if() {
-//				
-//				
-//			}
-			
-			else {
-				
-				JOptionPane.showMessageDialog(rootPane,"El usuario no existe. Por favor ponerse en contacto con "
-										+"el administrador para solicitar un registro.","ERROR",0);
-			}
-		}
 		
-//-----------------------------------------------------------------------------------------------------------------			
 	public laminalogin() {
 				
 		setLayout(null);
@@ -264,6 +245,91 @@ class marcologin extends JFrame{
 			private Image usuario;
 		}
 
+
+	public void ingreso() {
+		
+		String admin = "admin";
+		String pass = "123";
+		
+		String password = new String(contra.getPassword());//SE DEFINE EL STRING COMO NEW PARA LAS CONTRASEÑAS
+			
+		if(texto1.getText().equals(admin) && password.equals(pass)) {
+		
+			MarcoAdmin base= new MarcoAdmin();
+			
+			base.setVisible(true);
+			
+			marcologin.this.setVisible(false);
+			
+		}else {
+			
+			if(!texto1.getText().equals(admin) && !texto1.getText().equals("")) {
+				
+				temporal = registro.lista.inicio;
+				temporal2 = carga.lista.inicio;
+				
+				for(int i = 0; i< registro.lista.getTamaño(); i++){
+					
+					if(texto1.getText().equals(temporal.getCarnet())) {
+						
+						if(password.equals(temporal.getContraseña())) {
+							
+							usu1.setVisible(true);
+							
+							marcologin.this.setVisible(false);
+							
+							break;
+							
+						}else {
+							
+							JOptionPane.showMessageDialog(rootPane,"El usuario no existe. Por favor ponerse en contacto con "
+									+"el administrador para solicitar un registro.","ERROR",0);
+						}
+						
+						
+					}
+					
+					temporal = temporal.getSiguiente();
+				}
+				
+				for(int j =0; j < carga.lista.getTamaño(); j++) {
+					
+					if(texto1.getText().equals(temporal2.getCarnet())) {
+						
+						if(password.equals(temporal2.getContraseña())) {
+							
+							usu1.setVisible(true);
+							
+							marcologin.this.setVisible(false);
+							
+						}else {
+											
+							JOptionPane.showMessageDialog(rootPane,"El usuario no existe. Por favor ponerse en contacto con "
+									+"el administrador para solicitar un registro.","ERROR",0);
+
+						}
+						
+						break;
+					}
+					
+					temporal2 = temporal2.getSiguiente();
+				}
+				
+				
+			}
+			
+			else if(texto1.getText().equals("")) {
+				
+				JOptionPane.showMessageDialog(rootPane, "Ingrese un usuario por favor.", "EROOR", 1);
+			}
+			
+			else {
+			
+			JOptionPane.showMessageDialog(rootPane,"El usuario no existe. Por favor ponerse en contacto con "
+									+"el administrador para solicitar un registro.","ERROR",0);
+			}
+		}
+	}
 }
 
 //ADMINISTRADOR
@@ -402,7 +468,7 @@ class ventanaUsuario extends JFrame{
 		// TODO Auto-generated constructor stub
 		
 		setTitle("Ventana de Alumno");
-		setSize(300,220);
+		setSize(300,270);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -449,6 +515,18 @@ class ventanaUsuario extends JFrame{
 				}
 			});
 			
+			modificar.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+					modificarAlumno modi = new modificarAlumno();
+					
+					modi.setVisible(true);
+				}
+			});
+			
 			agregar.setBounds(100, 30, 100, 30);
 			mostrar.setBounds(100, 70, 100, 30);
 			modificar.setBounds(100, 110, 100, 30);
@@ -478,6 +556,7 @@ class registroAlumno extends JFrame{
 	static String contenido;
 	
 	static listaUsu lista = new listaUsu();//SE INSTANCIA AFUERA PARA QUE NO INICIE DESDE CER0 LA LISTA(PARA QUE SE PUEDAN AGREGAR ELEMENTOS NUEVOS)
+	static listaUsu listaMasiva = new listaUsu(); 
 	
 	public registroAlumno(){
 		
@@ -487,7 +566,6 @@ class registroAlumno extends JFrame{
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setResizable(false);
-		
 		
 		laminaregistro milamina = new laminaregistro();
 		add(milamina);
@@ -555,7 +633,7 @@ class registroAlumno extends JFrame{
 	
 	}
 
-private class botonUsuario extends JPanel{
+	private class botonUsuario extends JPanel{
 	
 	public botonUsuario() {
 		// TODO Auto-generated constructor stub
@@ -586,6 +664,13 @@ private class botonUsuario extends JPanel{
 				// TODO Auto-generated method stub
 				
 				cargaMasiva();
+				
+				cargaMasiva carga = new cargaMasiva();
+				
+				carga.cargaCadena(contenido);
+				
+				JOptionPane.showMessageDialog(rootPane, "Alumnos registrados de forma exitosa.", "Registro exitoso!!", 1);
+		
 			}
 		});
 		
@@ -685,9 +770,13 @@ private class botonUsuario extends JPanel{
 			
 			contenido = new String(texto);
 			
-			//System.out.println(contenido);
+			contenido = contenido.replaceAll("[\n\r]", "");
+			//CON ".replaceAll(LO QUE QUEREMOS REMPLAZAR, REMPLAZO );" QUITAMOS LOS SALTOS DE LINEA, PARA QUE
+			//NO SE ALMACENEN EN EL STRING QUE QUERRAMOS
 			
 			entrada.close();
+			
+			System.out.println(contenido);
 			
 		} catch (IOException e) {
 			
@@ -708,11 +797,12 @@ private class botonUsuario extends JPanel{
 		
 		contraRandom.setText(txtcarnet.getText() + ultimos);
 	}
+	
+	
 }
 
 //VISUALIZAR USUARIO
 //-------------------------------------------------------------------------------------------------------------------------
-
 class visualizarUsuario extends JFrame {
 	
 	JButton visualUsu, visualCarga;
@@ -726,7 +816,7 @@ class visualizarUsuario extends JFrame {
 	registroAlumno alumno = new registroAlumno();
 	
 	cargaMasiva carga = new cargaMasiva();
-	
+
 	nodoUsuario temporal;
 	
 	
@@ -734,7 +824,7 @@ class visualizarUsuario extends JFrame {
 		// TODO Auto-generated constructor stub
 	
 		setTitle("Visualzar Alumno");
-		setSize(600, 350);
+		setSize(800, 350);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -825,11 +915,13 @@ class visualizarUsuario extends JFrame {
 		}
 		
 		tablaUsu.setModel(tabla1);
+		
+		visualUsu.setEnabled(false);
 	}
 	
 	public void tablaMasiva() {
 		
-		carga.cargaCadena(alumno.contenido);
+		
 		
 		temporal = carga.lista.inicio;
 		
@@ -844,94 +936,226 @@ class visualizarUsuario extends JFrame {
 			temporal = temporal.getSiguiente();
 		}
 	
-	tablaUsu.setModel(tabla2);
+		tablaUsu.setModel(tabla2);
 
+		visualCarga.setEnabled(false);
 	}
 }
 
+class modificarAlumno extends JFrame{
+	
+	registroAlumno regis = new registroAlumno();
+	cargaMasiva carga = new cargaMasiva();
+	
+	nodoUsuario temporal, temporal2;
+	
+	JLabel carnet, dpi, nombre, direccion, creditos, contraseña, correo, rotulo, separacion;
+	
+	JTextField carnet2, dpi2, nombre2, direccion2, creditos2, contraseña2, correo2;
+	
+	JButton mostrar, modificar, cancelar;
+	
+	public modificarAlumno() {
+		
+		setTitle("Modificar Usuario");
+		setSize(350, 450);
+		setResizable(false);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		
+		laminaModifocar lamina = new laminaModifocar();
+		botonesModificar boton = new botonesModificar();
+		
+		add(lamina);
+		add(boton, BorderLayout.SOUTH);
+	}
+	
+	private class laminaModifocar extends JPanel{
+		
+		public laminaModifocar() {
+			
+			setLayout(null);
+			
+			carnet = new JLabel("Carné:");
+			dpi = new JLabel("DPI/CUI:");
+			nombre = new JLabel("Nombre:");
+			direccion = new JLabel("Direccion:");
+			correo = new JLabel("Correo:");
+			creditos = new JLabel("Creditos:");
+			contraseña = new JLabel("Contraseña:");
+			rotulo = new JLabel("Ingresa el numero de Carné y presiona Mostrar");
+			separacion = new JLabel("------------------------------------------------------------");
+			
+			carnet2 = new JTextField();
+			dpi2 = new JTextField();
+			nombre2 = new JTextField();
+			direccion2 = new JTextField();
+			correo2 = new JTextField();
+			creditos2 = new JTextField();
+			contraseña2 = new JTextField();
+			
+			rotulo.setBounds(40, 20, 300, 20);
+			carnet.setBounds(40, 60, 100, 20);
+			separacion.setBounds(60, 90, 400, 20);
+			dpi.setBounds(40, 120, 100, 20);
+			nombre.setBounds(40, 160, 100, 20);
+			direccion.setBounds(40, 200, 100, 20);
+			correo.setBounds(40, 240, 100, 20);
+			creditos.setBounds(40, 280, 100, 20);
+			contraseña.setBounds(40, 320, 100, 20);
+			
+			carnet2.setBounds(180, 60, 150, 20);
+			dpi2.setBounds(180, 120, 150, 20);
+			nombre2.setBounds(180, 160, 150, 20);
+			direccion2.setBounds(180, 200, 150, 20);
+			correo2.setBounds(180, 240, 150, 20);
+			creditos2.setBounds(180, 280, 150, 20);
+			contraseña2.setBounds(180, 320, 150, 20);
+			
+			add(rotulo);
+			add(carnet);
+			add(separacion);
+			add(dpi);
+			add(nombre);
+			add(direccion);
+			add(correo);
+			add(creditos);
+			add(contraseña);
+			
+			add(carnet2);
+			add(dpi2);
+			add(nombre2);
+			add(direccion2);
+			add(correo2);
+			add(creditos2);
+			add(contraseña2);
+			
+		}
+		
+	}
+	
+	private class botonesModificar extends JPanel{
+		
+		public botonesModificar() {
+		
+			setBackground(Color.BLUE);
+			
+			mostrar = new JButton("Mostrar");
+			modificar = new JButton("modificar");
+			cancelar = new JButton("Cancelar");
+			
+			mostrar.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+					mostrarDatos();
+				}
+			});
+			
+			add(mostrar);
+			add(modificar);
+			add(cancelar);
+		}
+		
+	}
+	
+	public void mostrarDatos() {
+		
+	
+		if(!carnet2.getText().equals("")) {
+			
+			temporal = regis.lista.inicio;
+			temporal2 = carga.lista.inicio;
+			
+			
+			for(int i =0; i<regis.lista.getTamaño(); i++) {
+				
+				if(carnet.getText().equals(temporal.getCarnet())) {
+					
+					dpi2 .setText(temporal.getID());
+					nombre2.setText(temporal.getNombre());
+					direccion2.setText(temporal.getDireccion());
+					correo2.setText(temporal.getCorreo());
+					creditos2.setText(temporal.getCreditos());
+					contraseña2.setText(temporal.getContraseña());
+					
+					break;
+				}else {
+					
+					temporal = temporal.getSiguiente();
+				}
+				
+			}
+			
+			
+			for(int i =0; i<carga.lista.getTamaño(); i++) {
+				
+				if(temporal2.getCarnet().equals(carnet2.getText())) {
+					
+					dpi2 .setText(temporal2.getID());
+					nombre2.setText(temporal2.getNombre());
+					direccion2.setText(temporal2.getDireccion());
+					correo2.setText(temporal2.getCorreo());
+					creditos2.setText(temporal2.getCreditos());
+					contraseña2.setText(temporal2.getContraseña());
+					
+					break;
+				}else {
+					
+					temporal2 = temporal2.getSiguiente();
+				}
+				
+			}
+			
+		}else {
+			
+			JOptionPane.showMessageDialog(rootPane, "Agrege un numero de carné!!!");
+		}
+		
+	}
+}
 
 
 //USUARIO
 //--------------------------------------------------------------------------------------------------------------
 class Usuario extends JFrame{
 	
+	String columna [] = {"Curso", "Catedratico", "Creditos", "Laboratorio", "Pre-requisito","Post-requisito"};
+	
+	String [][] fila = {};
+	
+	DefaultTableModel tablamodel= new DefaultTableModel(fila, columna);
+	
+	private Image javaU, usuImagen;
+	
+	JTable tabla;
+	
+	JScrollPane sc;
+	
+	
+	
 	public Usuario() {
 		
+		setLayout(new GridLayout(2,1));
 		setTitle("usuario");
-		setSize(1100,600);
+		setSize(1100,550);
+		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		laminausuario lamina = new laminausuario();
 		add(lamina);
+		
+		tablaLamina lamina1 = new tablaLamina();
+		add(lamina1, BorderLayout.SOUTH);
+		
 	}
 	
 	private class laminausuario extends JPanel{
 		
-		String barra = File.separator;
-		
-		private String ubicacion = System.getProperty("user.dir")+barra+"Registros2"+barra;
-		
-		File contenedor = new File(ubicacion);
-		
-		File [] registros = contenedor.listFiles();
-		
-		private Image javaU, usuImagen;
-
-		
-		private String columna [] = {"tipo","Tilulo","Autor","Edicion","Clave","Descripcion","Copias","Tema","Disponible"};
-		
-		JTable tabla;
-		
-		DefaultTableModel tablamodel= new DefaultTableModel(null, columna);
-		
-		public void modelo2() {
-			
-			
-				
-			for(int i=0; i<registros.length; i++) {
-				
-				File url = new File(ubicacion+registros[i].getName());
-				
-				try {
-					FileInputStream fis = new FileInputStream(url);
-					
-					Properties mostrar = new Properties();
-					
-					mostrar.load(fis);
-					
-					String filas []= {registros[i].getName().replace(".biblio", ""),
-							
-							mostrar.getProperty("tipo"),
-							mostrar.getProperty("titulo"),
-							mostrar.getProperty("autor"),
-							mostrar.getProperty("edicion"),
-							mostrar.getProperty("clave"),
-							mostrar.getProperty("descripcion"),
-							mostrar.getProperty("copia"),
-							mostrar.getProperty("tema"),
-							mostrar.getProperty("dsponible")
-							
-					};
-					
-					tablamodel.addRow(filas);
-					
-				}catch(Exception e) {
-					
-					JOptionPane.showMessageDialog(rootPane, "Ese registro no Existe");
-					
-				}
-				
-				
-				
-			}
-			
-			tabla.setModel(tablamodel);
-			}
-		
-		
-			
-		
+	
 		public void paintComponent(Graphics g){
 			
 			super.paintComponent(g);
@@ -956,17 +1180,15 @@ class Usuario extends JFrame{
 				JOptionPane.showMessageDialog(Usuario.this, "La imagen no se encuentra");
 			}
 			
-			d.drawImage(usuImagen, 505, 75, null);
+			d.drawImage(usuImagen, 485, 25, null);
 			
-			d.drawImage(javaU,70,80,null);
+			d.drawImage(javaU,35,60,null);
 			
 		}
 		
 		public laminausuario(){
 			
 			setLayout(null);
-			
-			
 			
 			JLabel logo = new JLabel("Logo");
 			
@@ -977,10 +1199,6 @@ class Usuario extends JFrame{
 			JLabel eti = new JLabel("Titulo");
 			
 			JLabel text1 = new JLabel("Buscar Registros Disponibles");
-			
-			tabla= new JTable();
-			
-			tabla.setModel(tablamodel);
 			
 			logout.addActionListener(new ActionListener() {
 
@@ -998,21 +1216,18 @@ class Usuario extends JFrame{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					modelo2();
+				
 				}
 				
 				
 			});
 			
-			tabla.setBounds(50, 300, 900, 200);
-			
-			logout.setBounds(950, 75, 95, 30);
-			logo.setBounds(80,40,75,30);
-			buscar.setBounds(100, 250, 95, 30);
-			favorito.setBounds(700,250,95,30);
-			text1.setBounds(270,250,250,30);
-			eti.setBounds(100, 225, 95, 30);
+			logout.setBounds(900, 55, 95, 30);
+			logo.setBounds(80,10,65,30);
+			buscar.setBounds(100, 205, 95, 30);
+			favorito.setBounds(700,205,95,30);
+			text1.setBounds(270,205,250,30);
+			eti.setBounds(100, 180, 95, 30);
 			
 			add(logout);
 			add(logo);
@@ -1021,10 +1236,26 @@ class Usuario extends JFrame{
 			add(favorito);
 			add(eti);
 			
-			add(tabla);	
+			
+		}
+	}	
+		private class tablaLamina extends JPanel{
+			
+			public tablaLamina() {
+				// TODO Auto-generated constructor stub
+				
+				setLayout(new GridLayout());
+			
+				tabla = new JTable(tablamodel);
+				
+				add(tabla);
+				add(new JScrollPane(tabla));
+			}
+			
 		}
 
 	}
 	
-}	
+	
+
 

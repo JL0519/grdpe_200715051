@@ -57,6 +57,41 @@ public class nodoUsuario {
 		return contraseña;
 	}
 	
+	public void setCarnet(String carnet) {
+		
+		this.carnet = carnet;
+	}
+		
+	public void setDPI(String id) {
+			
+			this.id = id;
+		}
+	
+	public void setNombre(String nombre) {
+		
+		this.nombre = nombre;
+	}
+	
+	public void setDireccion(String direccion) {
+		
+		this.direccion = direccion;
+	}
+	
+	public void setCreditos(String creditos) {
+		
+		this.creditos = creditos;
+	}
+	
+	public void setCorreo(String correo) {
+		
+		this.correo = correo;
+	}
+	
+	public void setContraseña(String contraseña) {
+		
+		this.contraseña = contraseña;
+	}
+	
 	
 	public void enlazarSiguiente(nodoUsuario siguiente) {
 		
