@@ -21,6 +21,7 @@ public class graficosProyecto  extends JFrame{
 		setSize(1300,700);
 		setResizable(false);
 		setLocationRelativeTo(null);
+		
 		laminaPort milamina = new laminaPort();
 		add(milamina);
 	}

@@ -8,6 +8,7 @@ public class clasePrinicipal {
 		// TODO Auto-generated method stub
 		
 		graficosProyecto proyect = new graficosProyecto();
+		
 		proyect.setVisible(true);
 
 		proyect.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
